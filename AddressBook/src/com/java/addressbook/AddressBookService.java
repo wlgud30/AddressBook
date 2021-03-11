@@ -97,14 +97,12 @@ public class AddressBookService {
 			String str = "";
 			int i = 0;
 			while ((line = br.readLine()) != null) {
-				if(line.contains("\n")) {
-					System.out.println("여기 엔터");
-				}
 				i++;
 				if (num != i) {
-					str += line + "\n";
+					str += line+"\n";
 				}
 			}
+			str = str.substring(0, str.length()-1);
 			writer = new FileWriter(filename);
 			bw = new BufferedWriter(writer);
 			bw.write(str);
