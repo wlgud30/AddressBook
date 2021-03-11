@@ -52,22 +52,11 @@ public class AddressBookService {
 	protected static void AddressInsert(AddressBook address) {
 		Writer writer = null;
 		BufferedWriter bw = null;
-		Reader reader = null;
-		BufferedReader br = null;
 		try {
-			reader = new FileReader(filename);
-			br = new BufferedReader(reader);
-
-			String line = null;
-			String str = "";
-			while ((line = br.readLine()) != null) {
-				str += line + "\n";
-			}
-			writer = new FileWriter(filename);
+			writer = new FileWriter(filename,true);
 			bw = new BufferedWriter(writer);
-			bw.append(str);
-			bw.append(address.getName() + "," + address.getHp() + "," + address.getTel());
 			bw.newLine();
+			bw.append(address.getName() + "," + address.getHp() + "," + address.getTel());
 			bw.flush();
 
 		} catch (IOException e) {
@@ -75,6 +64,7 @@ public class AddressBookService {
 			e.printStackTrace();
 		} finally {
 			try {
+				writer.close();
 				bw.close();
 			} catch (Exception e) {
 
@@ -107,6 +97,9 @@ public class AddressBookService {
 			String str = "";
 			int i = 0;
 			while ((line = br.readLine()) != null) {
+				if(line.contains("\n")) {
+					System.out.println("여기 엔터");
+				}
 				i++;
 				if (num != i) {
 					str += line + "\n";
@@ -123,6 +116,7 @@ public class AddressBookService {
 		} finally {
 			try {
 				bw.close();
+				br.close();
 			} catch (Exception e) {
 
 			}
