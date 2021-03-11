@@ -8,6 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -94,18 +97,38 @@ public class AddressBookService {
 			br = new BufferedReader(reader);
 
 			String line = null;
-			String str = "";
-			int i = 0;
-			while ((line = br.readLine()) != null) {
-				i++;
+//			String str = "";
+			
+//			int i = 0;
+			
+//			while ((line = br.readLine()) != null) {
+//				i++;
+//				if (num != i) {
+//					str += line+"\n";
+//				}
+//			}
+//			str = str.substring(0, str.length()-1);
+//			writer = new FileWriter(filename);
+//			bw = new BufferedWriter(writer);
+//			bw.write(str);
+			
+			
+//			배열로
+			List<String> list = new ArrayList<>();
+			for(int i = 1;(line = br.readLine()) != null;i++) {
 				if (num != i) {
-					str += line+"\n";
+					list.add(line);
 				}
 			}
-			str = str.substring(0, str.length()-1);
 			writer = new FileWriter(filename);
 			bw = new BufferedWriter(writer);
-			bw.write(str);
+			for(int i = 0 ; i<list.size();i++) {
+				bw.write(list.get(i));
+				if(i!=(list.size()-1)) {
+					bw.newLine();
+				}
+			}
+			
 			bw.flush();
 
 		} catch (IOException e) {
@@ -130,20 +153,31 @@ public class AddressBookService {
 			br = new BufferedReader(reader);
 
 			String line = null;
-			int i = 1;
+//			int i = 1;
+//			while ((line = br.readLine()) != null) {
+//				if(line.contains(str)) {
+//					StringTokenizer st = new StringTokenizer(i+". "+line, ",");
+//					while (st.hasMoreTokens()) {
+//						String token = st.nextToken();
+//						System.out.print(token + "\t");
+//					}
+//					System.out.println();
+//				}
+//				i++;
+//			}
+			//만약 검색조건이 이름만 이라면
+			List<AddressBook> list = new ArrayList<>();
 			while ((line = br.readLine()) != null) {
-				if(line.contains(str)) {
-					StringTokenizer st = new StringTokenizer(i+". "+line, ",");
-					while (st.hasMoreTokens()) {
-						String token = st.nextToken();
-						System.out.print(token + "\t");
-					}
-					System.out.println();
-				}
-				i++;
-				
+					StringTokenizer st = new StringTokenizer(line,",");
+					AddressBook adress = new AddressBook(st.nextToken(),st.nextToken(),st.nextToken());
+					list.add(adress);
 			}
-
+			for(int i=0;i<list.size();i++) {
+				if(list.get(i).getName().contains(str)) {
+					System.out.println((i+1)+". "+list.get(i).toString());
+				}
+			}
+			System.out.println();
 		} catch (FileNotFoundException e) {
 			System.err.println("파일을 찾지 못했습니다.");
 		} catch (IOException e) {
