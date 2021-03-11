@@ -2,13 +2,13 @@ package com.java.addressbook;
 
 public class AddressBook {
 	private String name;
-	private String phone;
+	private String hp;
 	private String tel;
 	
-	public AddressBook(String name, String phone, String tel) {
+	public AddressBook(String name, String hp, String tel) {
 		super();
 		this.name = name;
-		this.phone = phone;
+		this.hp = hp;
 		this.tel = tel;
 	}
 	
@@ -18,11 +18,11 @@ public class AddressBook {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPhone() {
-		return phone;
+	public String getHp() {
+		return hp;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setHp(String hp) {
+		this.hp = hp;
 	}
 	public String getTel() {
 		return tel;

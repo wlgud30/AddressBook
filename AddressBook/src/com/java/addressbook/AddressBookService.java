@@ -66,7 +66,7 @@ public class AddressBookService {
 			writer = new FileWriter(filename);
 			bw = new BufferedWriter(writer);
 			bw.append(str);
-			bw.append(address.getName() + "," + address.getPhone() + "," + address.getTel());
+			bw.append(address.getName() + "," + address.getHp() + "," + address.getTel());
 			bw.newLine();
 			bw.flush();
 
@@ -87,10 +87,10 @@ public class AddressBookService {
 		System.out.print(">이름 : ");
 		String name = sc.next();
 		System.out.print(">휴대전화 : ");
-		String phone = sc.next();
+		String hp = sc.next();
 		System.out.print(">집전화 : ");
 		String tel = sc.next();
-		AddressBook address = new AddressBook(name, phone, tel);
+		AddressBook address = new AddressBook(name, hp, tel);
 		return address;
 	}
 
