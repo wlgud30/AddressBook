@@ -16,9 +16,7 @@ public class AddressBookService {
 	static final String filename = rootPath + "AdressBook.txt";
 	
 	protected static void AddressList() {
-		// 메인 스트림
 		Reader reader = null;
-		// 보조 스트림
 		BufferedReader br = null;
 
 		try {
@@ -28,11 +26,10 @@ public class AddressBookService {
 			String line = null;
 			int i = 1;
 			while ((line = br.readLine()) != null) {
-				// line을 분절
-				StringTokenizer st = new StringTokenizer(line, ","); // (분절시킬 문자열,분절시킬 구분자) 두번째 파라미터의 기본값 : 공백 \t \r \n
+				StringTokenizer st = new StringTokenizer(line, ",");
 				System.out.print(i + ". ");
-				while (st.hasMoreTokens()) { // 뒤에 토큰이 더 있는가?
-					String token = st.nextToken(); // 토큰을 받아오고 다음으로 이동
+				while (st.hasMoreTokens()) { 
+					String token = st.nextToken(); 
 					System.out.print(token + "\t");
 				}
 				System.out.println();
@@ -143,10 +140,9 @@ public class AddressBookService {
 			String line = null;
 			int i = 1;
 			while ((line = br.readLine()) != null) {
-				// line을 분절
 				if(line.contains(str)) {
-					StringTokenizer st = new StringTokenizer(i+". "+line, ","); // (분절시킬 문자열,분절시킬 구분자) 두번째 파라미터의 기본값 : 공백 \t \r \n
-					while (st.hasMoreTokens()) { // 뒤에 토큰이 더 있는가?
+					StringTokenizer st = new StringTokenizer(i+". "+line, ",");
+					while (st.hasMoreTokens()) {
 						String token = st.nextToken();
 						System.out.print(token + "\t");
 					}
