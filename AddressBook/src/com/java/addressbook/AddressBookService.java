@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -17,32 +16,22 @@ import java.util.StringTokenizer;
 public class AddressBookService {
 	static final String rootPath = System.getProperty("user.dir") + "\\";
 	static final String filename = rootPath + "AdressBook.txt";
-	
-	protected static void AddressList() {
+
+	protected void AddressList() {
 		Reader reader = null;
 		BufferedReader br = null;
 
 		try {
 			reader = new FileReader(filename);
 			br = new BufferedReader(reader);
-
-			String line = null;
-			int i = 1;
-			while ((line = br.readLine()) != null) {
-				StringTokenizer st = new StringTokenizer(line, ",");
-				System.out.print(i + ". ");
-				while (st.hasMoreTokens()) { 
-					String token = st.nextToken(); 
-					System.out.print(token + "\t");
-				}
-				System.out.println();
-				i++;
+			List<AddressBook> adr = AddressBookList(br);
+			for (int i = 0; i < adr.size(); i++) {
+				System.out.print(
+						(i + 1) + ". " + adr.get(i).getName() + "\t" + adr.get(i).getHp() + "\t" + adr.get(i).getTel()+"\n");
 			}
 
 		} catch (FileNotFoundException e) {
 			System.err.println("파일을 찾지 못했습니다.");
-		} catch (IOException e) {
-			e.printStackTrace();
 		} finally {
 			try {
 				br.close();
@@ -52,11 +41,11 @@ public class AddressBookService {
 		}
 	}
 
-	protected static void AddressInsert(AddressBook address) {
+	protected void AddressInsert(AddressBook address) {
 		Writer writer = null;
 		BufferedWriter bw = null;
 		try {
-			writer = new FileWriter(filename,true);
+			writer = new FileWriter(filename, true);
 			bw = new BufferedWriter(writer);
 			bw.newLine();
 			bw.append(address.getName() + "," + address.getHp() + "," + address.getTel());
@@ -75,7 +64,7 @@ public class AddressBookService {
 		}
 	}
 
-	protected static AddressBook AddressInfo(Scanner sc) {
+	protected AddressBook AddressInfo(Scanner sc) {
 
 		System.out.print(">이름 : ");
 		String name = sc.next();
@@ -87,7 +76,24 @@ public class AddressBookService {
 		return address;
 	}
 
-	protected static void AddressDelete(int num) {
+	protected List<AddressBook> AddressBookList(BufferedReader br) {
+
+		List<AddressBook> list = new ArrayList<>();
+		try {
+
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				StringTokenizer st = new StringTokenizer(line, ",");
+				AddressBook address = new AddressBook(st.nextToken(), st.nextToken(), st.nextToken());
+				list.add(address);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	protected void AddressDelete(int num) {
 		Writer writer = null;
 		BufferedWriter bw = null;
 		Reader reader = null;
@@ -98,9 +104,9 @@ public class AddressBookService {
 
 			String line = null;
 //			String str = "";
-			
+
 //			int i = 0;
-			
+
 //			while ((line = br.readLine()) != null) {
 //				i++;
 //				if (num != i) {
@@ -111,24 +117,23 @@ public class AddressBookService {
 //			writer = new FileWriter(filename);
 //			bw = new BufferedWriter(writer);
 //			bw.write(str);
-			
-			
+
 //			배열로
 			List<String> list = new ArrayList<>();
-			for(int i = 1;(line = br.readLine()) != null;i++) {
+			for (int i = 1; (line = br.readLine()) != null; i++) {
 				if (num != i) {
 					list.add(line);
 				}
 			}
 			writer = new FileWriter(filename);
 			bw = new BufferedWriter(writer);
-			for(int i = 0 ; i<list.size();i++) {
+			for (int i = 0; i < list.size(); i++) {
 				bw.write(list.get(i));
-				if(i!=(list.size()-1)) {
+				if (i != (list.size() - 1)) {
 					bw.newLine();
 				}
 			}
-			
+
 			bw.flush();
 
 		} catch (IOException e) {
@@ -144,7 +149,7 @@ public class AddressBookService {
 		}
 	}
 
-	protected static void AddressSearch(String str) {
+	protected void AddressSearch(String str) {
 		Reader reader = null;
 		BufferedReader br = null;
 
@@ -165,16 +170,16 @@ public class AddressBookService {
 //				}
 //				i++;
 //			}
-			//만약 검색조건이 이름만 이라면
+			// 만약 검색조건이 이름만 이라면
 			List<AddressBook> list = new ArrayList<>();
 			while ((line = br.readLine()) != null) {
-					StringTokenizer st = new StringTokenizer(line,",");
-					AddressBook adress = new AddressBook(st.nextToken(),st.nextToken(),st.nextToken());
-					list.add(adress);
+				StringTokenizer st = new StringTokenizer(line, ",");
+				AddressBook adress = new AddressBook(st.nextToken(), st.nextToken(), st.nextToken());
+				list.add(adress);
 			}
-			for(int i=0;i<list.size();i++) {
-				if(list.get(i).getName().contains(str)) {
-					System.out.println((i+1)+". "+list.get(i).toString());
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i).getName().contains(str)) {
+					System.out.println((i + 1) + ". " + list.get(i).toString());
 				}
 			}
 			System.out.println();
