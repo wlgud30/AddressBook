@@ -17,8 +17,8 @@ public class AddressBookService {
 	static final String rootPath = System.getProperty("user.dir") + "\\";
 	static final String filename = rootPath + "AdressBook.txt";
 
-	protected void AddressList() {
-		List<AddressBook> adr = AddressBookList();
+	protected void addressList() {
+		List<AddressBook> adr = addressBookList();
 		for (int i = 0; i < adr.size(); i++) {
 			System.out.print((i + 1) + ". " + adr.get(i).getName() + "\t" + adr.get(i).getHp() + "\t"
 					+ adr.get(i).getTel() + "\n");
@@ -26,7 +26,7 @@ public class AddressBookService {
 
 	}
 
-	protected void AddressInsert(AddressBook address) {
+	protected void addressInsert(AddressBook address) {
 		Writer writer = null;
 		BufferedWriter bw = null;
 		try {
@@ -49,7 +49,7 @@ public class AddressBookService {
 		}
 	}
 
-	protected AddressBook AddressInfo(Scanner sc) {
+	protected AddressBook addressInfo(Scanner sc) {
 
 		System.out.print(">이름 : ");
 		String name = sc.next();
@@ -61,7 +61,7 @@ public class AddressBookService {
 		return address;
 	}
 
-	protected List<AddressBook> AddressBookList() {
+	protected List<AddressBook> addressBookList() {
 		Reader reader = null;
 		BufferedReader br = null;
 
@@ -89,11 +89,11 @@ public class AddressBookService {
 		return list;
 	}
 
-	protected void AddressDelete(int num) {
+	protected void addressDelete(int num) {
 		Writer writer = null;
 		BufferedWriter bw = null;
 		try {
-			List<AddressBook> list = AddressBookList();
+			List<AddressBook> list = addressBookList();
 			list.remove(num - 1); // 리스트는 0부터 시작이기때문에 +1
 
 			writer = new FileWriter(filename);
@@ -102,7 +102,6 @@ public class AddressBookService {
 			for (int i = 0; i < list.size(); i++) {
 				if (i == list.size() - 1) {
 					bw.write(list.get(i).getName() + "," + list.get(i).getHp() + "," + list.get(i).getTel());
-
 				} else {
 					bw.write(list.get(i).getName() + "," + list.get(i).getHp() + "," + list.get(i).getTel());
 					bw.newLine();
@@ -121,7 +120,7 @@ public class AddressBookService {
 		}
 	}
 
-	protected void AddressSearch(String str) {
+	protected void addressSearch(String str) {
 //			int i = 1;
 //			while ((line = br.readLine()) != null) {
 //				if(line.contains(str)) {
@@ -135,7 +134,7 @@ public class AddressBookService {
 //				i++;
 //			}
 		// 만약 검색조건이 이름만 이라면
-		List<AddressBook> list = AddressBookList();
+		List<AddressBook> list = addressBookList();
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getName().contains(str)) {
 				System.out.println((i + 1) + ". " + list.get(i).toString());
